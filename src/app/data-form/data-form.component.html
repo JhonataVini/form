@@ -15,19 +15,20 @@
     </div>
     <div class="col-sm-12">
       <input type="email" class="form-control" formControlName="email" id="email" placeholder="nome@email.com">
-      <app-campo-control-erro [mostrarErro]="verificaValidTouched('email')" mgsErro="E-mail é obrigatório.">
+      <app-error-msg [control]="formulario.get('email')" label="Email"></app-error-msg>
+      <!-- <app-campo-control-erro [mostrarErro]="verificaValidTouched('email')" mgsErro="E-mail é obrigatório.">
       </app-campo-control-erro>
       <app-campo-control-erro [mostrarErro]="verificarEmailInvalido()" mgsErro="E-mail inválido">
-      </app-campo-control-erro>
+      </app-campo-control-erro> -->
       <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'PENDING'"
       mgsErro="Valindando email">
       </app-campo-control-erro>
       <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'VALID'"
-      mgsErro="Email válido">
+      mgsErro="Email válido" >
       </app-campo-control-erro>
-      <app-campo-control-erro [mostrarErro]="formulario.get('email').hasError('emailInvalido')"
+      <!-- <app-campo-control-erro [mostrarErro]="formulario.get('email').hasError('emailInvalido')"
       mgsErro="Email já cadastrado">
-      </app-campo-control-erro>
+      </app-campo-control-erro> -->
     </div>
   </div>
   <!-- E-mail -->
