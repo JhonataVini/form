@@ -5,30 +5,60 @@ import { of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class ConsultaCepService {
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
   consultaCEP(cep: string) {
-     // Nova variável "cep" somente com dígitos.
+
+    console.log(cep);
+
+    // Nova variável "cep" somente com dígitos.
     cep = cep.replace(/\D/g, '');
 
-     // Verifica se campo cep possui valor informado.
+    // Verifica se campo cep possui valor informado.
     if (cep !== '') {
+      // Expressão regular para validar o CEP.
+      const validacep = /^[0-9]{8}$/;
 
-    // Expressão regular para validar o CEP.
-     const validacep = /^[0-9]{8}$/;
-
-     // Valida o formato do CEP.
-     if (validacep.test(cep)) {
-
-      this.http.get(`//viacep.com.br/ws/${cep}/json`);
-      // console.log(cep + 'consulta-cep serviço');
-     }
+      // Valida o formato do CEP.
+      if (validacep.test(cep)) {
+        return this.http.get(`//viacep.com.br/ws/${cep}/json`);
+      }
     }
+
     return of({});
   }
-
 }
+
+
+
+// export class ConsultaCepService {
+
+//   constructor(
+//     private http: HttpClient
+//   ) { }
+
+//   consultaCEP(cep: string) {
+//      // Nova variável "cep" somente com dígitos.
+//     cep = cep.replace(/\D/g, '');
+
+//      // Verifica se campo cep possui valor informado.
+//     if (cep !== '') {
+
+//     // Expressão regular para validar o CEP.
+//      const validacep = /^[0-9]{8}$/;
+
+//      // Valida o formato do CEP.
+//      if (validacep.test(cep)) {
+
+//       this.http.get(`//viacep.com.br/ws/${cep}/json`);
+//       // console.log(cep + 'consulta-cep serviço');
+//      }
+//     }
+//     return of({});
+//   }
+
+// }

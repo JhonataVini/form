@@ -1,5 +1,12 @@
 <form class="form-horizontal" [formGroup]="formulario" (ngSubmit)="onSubmit()">
-  <div class="form-group" [ngClass]="aplicaCssErro('nome')">
+
+  <!-- <app-input-field class="col-sm-12"
+    [classeCss]="aplicaCssErro('nome')" id="nome" label="Nome"
+    [control]="formulario.get('nome')">
+  </app-input-field> -->
+
+
+   <div class="form-group" [ngClass]="aplicaCssErro('nome')">
     <div class="col-sm-12">
       <label for="nome" class="control-label">Nome</label>
     </div>
@@ -20,15 +27,13 @@
       </app-campo-control-erro>
       <app-campo-control-erro [mostrarErro]="verificarEmailInvalido()" mgsErro="E-mail inválido">
       </app-campo-control-erro> -->
-      <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'PENDING'"
-      mgsErro="Valindando email">
+      <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'PENDING'" mgsErro="Valindando email">
       </app-campo-control-erro>
-      <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'VALID'"
-      mgsErro="Email válido" >
+      <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'VALID'" mgsErro="Email válido">
       </app-campo-control-erro>
-      <!-- <app-campo-control-erro [mostrarErro]="formulario.get('email').hasError('emailInvalido')"
-      mgsErro="Email já cadastrado">
-      </app-campo-control-erro> -->
+      <app-campo-control-erro [mostrarErro]="formulario.get('email').hasError('emailInvalido')"
+        mgsErro="Email já cadastrado">
+      </app-campo-control-erro>
     </div>
   </div>
   <!-- E-mail -->
@@ -37,9 +42,10 @@
       <label for="confirmarEmail" class="control-label">Confirmar E-mail</label>
     </div>
     <div class="col-sm-12">
-      <input type="email" class="form-control" formControlName="confirmarEmail" id="confirmarEmail" placeholder="nome@email.com">
+      <input type="email" class="form-control" formControlName="confirmarEmail" id="confirmarEmail"
+        placeholder="nome@email.com">
       <app-campo-control-erro [mostrarErro]="formulario.get('confirmarEmail').hasError('equalsTo')"
-      mgsErro="E-mails não são iguais">
+        mgsErro="E-mails não são iguais">
       </app-campo-control-erro>
     </div>
   </div>
@@ -47,9 +53,10 @@
   <div formGroupName="endereco">
     <!-- cep -->
     <div class="form-group">
-      <div class="col-md-3" [ngClass]="aplicaCssErro('endereco.cep')" >
+      <div class="col-md-3" [ngClass]="aplicaCssErro('endereco.cep')">
         <label for="cep" class="control-label">CEP</label>
-        <input type="text" class="form-control" id="cep" formControlName="cep" (blur)="consultaCEP()">
+        <input type="text" class="form-control" id="cep" formControlName="cep">
+        <!-- (blur)="consultaCEP()" -->
         <app-error-msg [control]="formulario.get('endereco.cep')" label="cep"></app-error-msg>
       </div>
       <!-- numero -->
@@ -129,34 +136,33 @@
   </div>
 
   <div class="form-group">
-    <div class="col-md-3" [ngClass]="aplicaCssErro('termos')" >
+    <div class="col-md-3" [ngClass]="aplicaCssErro('termos')">
       <div class="checkbox">
         <label class="checkbox-inline">
           <input type="checkbox" formControlName="termos"> Aceito os termos.
         </label>
-         <app-error-msg [control]="formulario.get('termos').valid" label="Aceito os termos"></app-error-msg>
+        <app-error-msg [control]="formulario.get('termos').valid" label="Aceito os termos"></app-error-msg>
 
-         <!-- <app-campo-control-erro [mostrarErro]="!formulario.get('termos').valid" msgErro="Por favor, aceite os termos.">
+        <!-- <app-campo-control-erro [mostrarErro]="!formulario.get('termos').valid" msgErro="Por favor, aceite os termos.">
          </app-campo-control-erro> -->
       </div>
     </div>
 
 
-  <div class="col-md-12" [ngClass]="aplicaCssErro('frameworks')">
-    <label for="frameworks">Frameworks</label>
-    <div id="frameworks" class="row">
-      <div class="checkbox" class="col-sm-3"
-      formArrayName="frameworks"
-      *ngFor="let item of formulario.get('frameworks').controls; let i = index">
-        <label class="checkbox-inline">
-          <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
-        </label>
+    <div class="col-md-12" [ngClass]="aplicaCssErro('frameworks')">
+      <label for="frameworks">Frameworks</label>
+      <div id="frameworks" class="row">
+        <div class="checkbox" class="col-sm-3" formArrayName="frameworks"
+          *ngFor="let item of formulario.get('frameworks').controls; let i = index">
+          <label class="checkbox-inline">
+            <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
+          </label>
+        </div>
+        <app-error-msg [control]="formulario.get('frameworks')" label="Frameworks"></app-error-msg>
       </div>
-      <app-error-msg [control]="formulario.get('frameworks')" label="Frameworks"></app-error-msg>
     </div>
   </div>
-</div>
-<hr>
+  <hr>
 
   <button type="submit" class="btn btn-primary">Submit</button>
   <button class="btn btn-default" (click)="resetar()">Cancelar</button>
