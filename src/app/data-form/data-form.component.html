@@ -39,7 +39,7 @@
   <!-- E-mail -->
   <div class="form-group" [ngClass]="aplicaCssErro('confirmarEmail')">
     <div class="col-sm-12">
-      <label for="confirmarEmail" class="control-label">Confirmar E-mail</label>
+      <label for="confirmarEmail" class="control-label" placeholder="Confirmar E-mail">Confirmar E-mail</label>
     </div>
     <div class="col-sm-12">
       <input type="email" class="form-control" formControlName="confirmarEmail" id="confirmarEmail"
@@ -55,21 +55,21 @@
     <div class="form-group">
       <div class="col-md-3" [ngClass]="aplicaCssErro('endereco.cep')">
         <label for="cep" class="control-label">CEP</label>
-        <input type="text" class="form-control" id="cep" formControlName="cep">
+        <input type="text" class="form-control" id="cep" formControlName="cep" placeholder="CEP">
         <!-- (blur)="consultaCEP()" -->
         <app-error-msg [control]="formulario.get('endereco.cep')" label="cep"></app-error-msg>
       </div>
       <!-- numero -->
       <div class="col-md-3" [ngClass]="aplicaCssErro('endereco.numero')">
         <label for="numero" class="control-label">Número</label>
-        <input type="text" class="form-control" id="numero" formControlName="numero">
+        <input type="text" class="form-control" id="numero" formControlName="numero" placeholder="Numero">
         <app-error-msg [control]="formulario.get('endereco.numero')" label="numero"></app-error-msg>
       </div>
       <!-- Complemento -->
 
       <div class="col-md-6">
         <label for="complemento" class="control-label">Complemento</label>
-        <input type="text" class="form-control" id="complemento" formControlName="complemento">
+        <input type="text" class="form-control" id="complemento" formControlName="complemento" placeholder="Complemento">
       </div>
     </div>
     <!-- Rua -->
@@ -79,7 +79,7 @@
         <label for="rua" class="control-label">Rua</label>
       </div>
       <div class="col-sm-12">
-        <input type="text" class="form-control" id="rua" formControlName="rua">
+        <input type="text" class="form-control" id="rua" formControlName="rua" placeholder="Rua">
         <app-error-msg [control]="formulario.get('endereco.rua')" label="rua"></app-error-msg>
       </div>
     </div>
@@ -87,20 +87,20 @@
     <div class="form-group">
       <div class="col-md-5" [ngClass]="aplicaCssErro('endereco.bairro')">
         <label for="bairro" class="control-label">Bairro</label>
-        <input type="text" class="form-control" id="bairro" formControlName="bairro">
+        <input type="text" class="form-control" id="bairro" formControlName="bairro" placeholder="Bairro">
         <app-error-msg [control]="formulario.get('endereco.bairro')" label="bairro"></app-error-msg>
       </div>
 
 
       <div class="col-md-4" [ngClass]="aplicaCssErro('endereco.cidade')">
         <label for="cidade" class="control-label">Cidade</label>
-        <input type="text" class="form-control" id="cidade" formControlName="cidade">
+        <input type="text" class="form-control" id="cidade" formControlName="cidade" placeholder="Cidade">
         <app-error-msg [control]="formulario.get('endereco.cidade')" label="cidade"></app-error-msg>
       </div>
 
       <div class="col-md-3" [ngClass]="aplicaCssErro('endereco.estado')">
         <label for="estado" class="control-label">Estado</label>
-        <select type="text" class="form-control" id="estado" formControlName="estado">
+        <select type="text" class="form-control" id="estado" formControlName="estado" placeholder="Estado">
           <option *ngFor="let estado of estados | async" [value]="estado.sigla">{{ estado.nome }}</option>
         </select>
         <app-error-msg [control]="formulario.get('endereco.estado')" label="estado"></app-error-msg>
@@ -111,7 +111,9 @@
   <div class="form-group">
     <div class="col-md-4" [ngClass]="aplicaCssErro('cargo')">
       <label for="cargo" class="control-label">Cargo</label>
-      <select type="text" class="form-control" id="cargo" formControlName="cargo" [compareWith]="compararCargos">
+      <select type="text" class="form-control" id="cargo"
+      formControlName="cargo" [compareWith]="compararCargos"
+      placeholder="cargo">
         <option *ngFor="let cargo of cargos" [ngValue]="cargo">{{ cargo.desc }}</option>
       </select>
     </div>
