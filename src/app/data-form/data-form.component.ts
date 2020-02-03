@@ -9,6 +9,7 @@ import { FormVamlidation } from '../shared/form-validation';
 import { VerificaEmailService } from './services/verifica-email.service';
 import { map, tap, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { BaseFormComponent } from '../shared/base-form/base-form.component';
+import { Cidade } from '../shared/models/cidade';
 
 @Component({
   selector: 'app-data-form',
@@ -19,8 +20,9 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
 
 
   // formulario: FormGroup;
-  //  estados: EstadoBr[];
-  estados: Observable<EstadoBr[]>;
+    estados: EstadoBr[];
+    cidades: Cidade[];
+  // estados: Observable<EstadoBr[]>;
   cargos: any[];
   tecnologias: any[];
   newletterOp: any[];
@@ -41,7 +43,10 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
 
    // this.verificaEmailService.verificarEmail('email@email.com').subscribe();
 
-    this.estados = this.dropdownService.getEstadosBr();
+   // this.estados = this.dropdownService.getEstadosBr();
+    this.dropdownService.getEstadosBr()
+    .subscribe(dados => this.estados = dados);
+
     this.cargos = this.dropdownService.getCargos();
     this.tecnologias = this.dropdownService.getTecnologias();
     this.newletterOp = this.dropdownService.getNewletter();
@@ -81,13 +86,25 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
     this.formulario.get('endereco.cep').statusChanges
     .pipe(
       distinctUntilChanged(),
-      tap(value => console.log('Status CEP: ', value)),
+      tap(value => console.log('status CEP:', value)),
       switchMap(status => status === 'VALID' ?
-      this.cepService.consultaCEP(this.formulario.get('endereco.cep').value)
-       : empty()
-       )
+        this.cepService.consultaCEP(this.formulario.get('endereco.cep').value)
+        : empty()
       )
+    )
     .subscribe(dados => dados ? this.populaDadosForm(dados) : {});
+
+    this.formulario.get('endereco.estado').valueChanges
+    .pipe(
+      tap(estado => console.log('Novo estado: ', estado)),
+      map(estado => this.estados.filter(e => e.sigla === estado)),
+      map(estados => estados && estados.length > 0 ? estados[0].id : empty()),
+      switchMap((estadoId: number) => this.dropdownService.getCidades(estadoId)),
+      tap(console.log)
+    )
+    .subscribe(cidades => this.cidades = cidades);
+
+   // this.dropdownService.getCidades(8).subscribe(console.log);
 
       // 2° forma de se fazer
 

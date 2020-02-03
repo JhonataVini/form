@@ -9,12 +9,12 @@ export abstract class BaseFormComponent implements OnInit {
 
   formulario: FormGroup;
 
-
   constructor() { }
 
   ngOnInit() {
   }
- abstract submit();
+
+  abstract submit();
 
   onSubmit() {
     if (this.formulario.valid) {
@@ -25,7 +25,7 @@ export abstract class BaseFormComponent implements OnInit {
     }
   }
 
-  verificaValidacoesForm(formGroup: FormGroup | FormArray ) {
+  verificaValidacoesForm(formGroup: FormGroup | FormArray) {
     Object.keys(formGroup.controls).forEach(campo => {
       console.log(campo);
       const controle = formGroup.get(campo);
@@ -42,33 +42,32 @@ export abstract class BaseFormComponent implements OnInit {
   }
 
   verificaValidTouched(campo: string) {
-    return !this.formulario.get(campo).valid && (this.formulario.get(campo).touched || this.formulario.get(campo).dirty);
+    return (
+      !this.formulario.get(campo).valid &&
+      (this.formulario.get(campo).touched || this.formulario.get(campo).dirty)
+    );
   }
 
   verificaRequired(campo: string) {
     return (
       this.formulario.get(campo).hasError('required') &&
       (this.formulario.get(campo).touched || this.formulario.get(campo).dirty)
-
     );
   }
 
-  verificarEmailInvalido() {
-    if (this.formulario.get('email').errors) {
-      return this.formulario.get('email').errors['email'] && this.formulario.get('email').touched;
+  verificaEmailInvalido() {
+    const campoEmail = this.formulario.get('email');
+    if (campoEmail.errors) {
+      return campoEmail.errors['email'] && campoEmail.touched;
     }
   }
 
   aplicaCssErro(campo: string) {
-
     return {
       'has-error': this.verificaValidTouched(campo),
-      'has-feedback': this.verificaValidTouched(campo),
+      'has-feedback': this.verificaValidTouched(campo)
     };
   }
 
-  getCampo(campo: string) {
-    return this.formulario.get(campo);
-  }
 
 }
